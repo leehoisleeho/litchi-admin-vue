@@ -6,7 +6,7 @@
 
 基于Naive UI 做的一个中后台 便于自己开发。
 
-版本 0.0.5
+版本 0.0.2
 
 ```bash
  yarn isntall
