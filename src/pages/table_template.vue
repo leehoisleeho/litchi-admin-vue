@@ -1,19 +1,15 @@
 <script setup>
 import {ref} from 'vue'
-import {NButton,NDivider,NPagination,NPopconfirm,NDrawer,NDrawerContent} from 'naive-ui'
+import {NButton, NDivider, NPagination, NPopconfirm, NDrawer, NDrawerContent} from 'naive-ui'
+
 const list = ref([
-  {id:2,name:"leeho"},
-  {id:2,name:"sudi"},
-  {id:2,name:"yaoyao"},
-  {id:2,name:"yaoyao"},
+  {id: 1, name: "leeho"},
+  {id: 2, name: "sudi"},
+  {id: 3, name: "yaoyao"},
+  {id: 5, name: "lapland"},
+  {id: 6, name: "likunling"},
 ])
 const page = ref(1)
-const handlePositiveClick = ()=>{
-  console.log('ok')
-}
-const handleNegativeClick = ()=>{
-  console.log('no')
-}
 /**
  * 抽屉
  */
@@ -24,17 +20,32 @@ const activate = (place) => {
   active.value = true;
   placement.value = place;
 };
-const add = ()=>{
+const add = () => {
+  list.value.push({
+    id: 7,
+    name: 'leehoisleeho'
+  })
   active.value = false;
 }
-const Oncancel = ()=>{
+const Oncancel = () => {
   active.value = false;
+}
+// 删除
+const confirmDelete = (id) => {
+  list.value.forEach((item, index) => {
+    if (item.id === id) {
+      list.value.splice(index, 1)
+    }
+  })
+}
+const cancelDelete = () => {
+
 }
 </script>
 
 <template>
   <div class="container">
-    <n-drawer v-model:show="active" :width="888" :placement="placement">
+    <n-drawer v-model:show="active" :width="800" :placement="placement">
       <n-drawer-content title="添加列表">
         内容
         <template #footer>
@@ -58,80 +69,103 @@ const Oncancel = ()=>{
       <n-divider title-placement="mid" style="color: #999;font-size: 13px" v-show="list.length === 0">
         没有数据
       </n-divider>
-      <ul class="tableInfo" v-for="item in list">
-        <li>1</li>
-        <li>李浩</li>
-        <li>18608735101</li>
-        <li>leehovip@gmail.com</li>
-        <li>蒙自市红竺园B区联8-1</li>
-        <li>
-          <n-button type="info" size="small">
-            查看
-          </n-button>
-          <n-popconfirm
-              @positive-click="handlePositiveClick"
-              @negative-click="handleNegativeClick"
-              positive-text="确认"
-              negative-text="取消"
-          >
-            <template #trigger>
-              <n-button type="error" size="small">删除</n-button>
-            </template>
-            确认删除吗？
-          </n-popconfirm>
-        </li>
-      </ul>
+      <TransitionGroup name="list" tag="div">
+        <ul class="tableInfo" v-for="item in list" :key="item.id">
+          <li>1</li>
+          <li>{{ item.name }}</li>
+          <li>18608735101</li>
+          <li>leehovip@gmail.com</li>
+          <li>蒙自市红竺园B区联8-1</li>
+          <li>
+            <n-button type="info" size="small">查看</n-button>
+            <n-popconfirm
+                @positive-click="confirmDelete(item.id)"
+                @negative-click="cancelDelete"
+                positive-text="确认"
+                negative-text="取消"
+            >
+              <template #trigger>
+                <n-button type="error" size="small">删除</n-button>
+              </template>
+              确认删除吗？
+            </n-popconfirm>
+          </li>
+        </ul>
+      </TransitionGroup>
       <n-divider title-placement="mid" style="color: #666;font-size: 13px">
-        {{list.length}}条数据
+        {{ list.length }}条数据
       </n-divider>
       <div class="pagination">
-        <n-pagination v-model:page="page" :page-count="1" />
+        <n-pagination v-model:page="page" :page-count="1"/>
       </div>
     </div>
   </div>
 </template>
 
 <style scoped>
-.tableInfo>li>.n-button{
+.list-enter-active,
+.list-leave-active {
+  transition: all 300ms ease;
+}
+
+.list-enter-from {
+  opacity: 0;
+  transform: translateY(-50px);
+}
+
+.list-leave-to {
+  opacity: 0;
+  transform: translateY(50px);
+}
+
+.tableInfo > li > .n-button {
   margin-right: 10px;
 }
-.pagination{
+
+.pagination {
   display: flex;
   justify-content: center;
   padding-bottom: 40px;
 }
-.tableInfo{
+
+.tableInfo {
   display: flex;
   padding: 20px 0;
   align-items: center;
 }
-.tableInfo>li{
+
+.tableInfo > li {
   flex: 1;
   text-align: center;
   color: #333333;
 }
-.tableTitle>li{
+
+.tableTitle > li {
   flex: 1;
   text-align: center;
 
 }
-.tableTitle{
+
+.tableTitle {
   display: flex;
   margin-bottom: 10px;
 }
-.infoHeader{
+
+.infoHeader {
   display: flex;
   align-items: center;
   flex-direction: row-reverse;
   padding-right: 20px;
   height: 70px;
 }
-.info{
+
+.info {
   width: 100%;
   border-radius: 10px;
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
   overflow-y: auto;
 }
+
 .container {
   height: calc(100vh - 80px);
   padding: 20px;

@@ -1,7 +1,7 @@
 import {createRouter, createWebHashHistory} from 'vue-router';
 import index from '../src/pages/index.vue'
 import dashboard from '../src/pages/dashboard.vue';
-import baseTemplate from '../src/pages/baseTemplate.vue';
+import table_template from '../src/pages/table_template.vue';
 import login from '../src/pages/login.vue'
 const routes = [
     {
@@ -10,7 +10,7 @@ const routes = [
     {
         path: '/index', component: index, children: [
             {path: '/dashboard', component: dashboard},
-            {path: '/baseTemplate', component: baseTemplate},
+            {path: '/table_template', component: table_template},
         ]
     },
 ];

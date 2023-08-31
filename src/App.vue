@@ -12,6 +12,5 @@ import Index from "./pages/index.vue";
   .container{
     min-width: 1200px;
     height: 100vh;
-    outline: 1px solid red;
   }
 </style>
