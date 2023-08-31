@@ -1,12 +1,14 @@
 <script setup>
 import {ref} from "vue";
 import config from "../config.js";
-import {NInput,NButton,NIcon} from 'naive-ui'
+import {NInput,NButton,NIcon,useMessage} from 'naive-ui'
 import { PersonSharp,LockClosed } from '@vicons/ionicons5'
 import {useRouter} from 'vue-router';
 const router = useRouter();
+const message = useMessage()
 const toIndex = ()=>{
   router.push('/index')
+  message.success('登录成功')
 }
 </script>
 

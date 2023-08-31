@@ -1,19 +1,23 @@
 <script setup>
 import {onMounted} from "vue";
-onMounted(()=>{
+import {NMessageProvider} from 'naive-ui'
+onMounted(() => {
   console.log('🐰 Litchi start')
 })
 </script>
 
 <template>
-  <div class="container">
-    <router-view></router-view>
-  </div>
+  <n-message-provider>
+    <div class="container">
+      <router-view></router-view>
+    </div>
+  </n-message-provider>
+
 </template>
 
 <style scoped>
-  .container{
-    min-width: 1200px;
-    height: 100vh;
-  }
+.container {
+  min-width: 1200px;
+  height: 100vh;
+}
 </style>

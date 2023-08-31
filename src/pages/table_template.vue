@@ -3,11 +3,7 @@ import {ref} from 'vue'
 import {NButton, NDivider, NPagination, NPopconfirm, NDrawer, NDrawerContent} from 'naive-ui'
 
 const list = ref([
-  {id: 1, name: "leeho"},
-  {id: 2, name: "sudi"},
-  {id: 3, name: "yaoyao"},
-  {id: 5, name: "lapland"},
-  {id: 6, name: "likunling"},
+
 ])
 const page = ref(1)
 /**
@@ -92,7 +88,7 @@ const cancelDelete = () => {
           </li>
         </ul>
       </TransitionGroup>
-      <n-divider title-placement="mid" style="color: #666;font-size: 13px">
+      <n-divider title-placement="mid" style="color: #666;font-size: 13px" v-show="list.length !== 0">
         {{ list.length }}条数据
       </n-divider>
       <div class="pagination">
