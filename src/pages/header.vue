@@ -1,9 +1,12 @@
 <script setup>
 import {NDropdown,NIcon} from 'naive-ui'
 import config from '../config.js'
-
+import {useRouter} from "vue-router";
+const router = useRouter();
 const handleSelect = (e)=>{
-
+  if (e===3){
+    router.push("/")
+  }
 }
 const options = [
   {

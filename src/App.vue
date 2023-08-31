@@ -1,5 +1,8 @@
 <script setup>
-import Index from "./pages/index.vue";
+import {onMounted} from "vue";
+onMounted(()=>{
+  console.log('🐰 Litchi start')
+})
 </script>
 
 <template>

@@ -4,6 +4,7 @@ import Header from "./header.vue";
 import {onUnmounted} from 'vue'
 import {useRouter} from 'vue-router';
 import {useNavigationStore} from '../../store/index.js'
+import config from "../config.js";
 const router = useRouter();
 const store = useNavigationStore()
 /**
@@ -55,6 +56,7 @@ const menuOptions = [
   <div class="container">
     <div class="side">
       <n-menu :options="menuOptions" @update:value="handleUpdateValue" :default-value="String(store.value)"/>
+      <div class="foot">{{config.footer}}</div>
     </div>
     <div class="main">
       <router-view></router-view>
@@ -77,5 +79,15 @@ const menuOptions = [
   border: 1px solid #f3f3f3;
   width: 240px;
   padding: 10px 0;
+  position: relative;
+}
+.side > .foot{
+  position: absolute;
+  bottom: 10px;
+  width: 100%;
+  color: #999999;
+  font-size: 12px;
+  text-align: center;
+  padding: 0 10px;
 }
 </style>

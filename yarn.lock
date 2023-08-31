@@ -166,6 +166,11 @@
   resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.197.tgz#e95c5ddcc814ec3e84c891910a01e0c8a378c54b"
   integrity sha512-BMVOiWs0uNxHVlHBgzTIqJYmj+PgCo4euloGF+5m4okL3rEYzM2EEv78mw8zWSMM57dM7kVIgJ2QDvwHSoCI5g==
 
+"@vicons/ionicons5@^0.12.0":
+  version "0.12.0"
+  resolved "https://registry.yarnpkg.com/@vicons/ionicons5/-/ionicons5-0.12.0.tgz#c39fda04420dfae3b58053faf8aaf3555253299d"
+  integrity sha512-Iy1EUVRpX0WWxeu1VIReR1zsZLMc4fqpt223czR+Rpnrwu7pt46nbnC2ycO7ItI/uqDLJxnbcMC7FujKs9IfFA==
+
 "@vitejs/plugin-vue@^4.2.3":
   version "4.3.4"
   resolved "https://registry.yarnpkg.com/@vitejs/plugin-vue/-/plugin-vue-4.3.4.tgz#a289dff38e01949fe7be581d5542cabaeb961dec"
@@ -456,6 +461,13 @@ vfonts@^0.0.3:
   resolved "https://registry.yarnpkg.com/vfonts/-/vfonts-0.0.3.tgz#999d66fecea18efee3f2b966c81101ae8ce01a29"
   integrity sha512-nguyw8L6Un8eelg1vQ31vIU2ESxqid7EYmy8V+MDeMaHBqaRSkg3dTBToC1PR00D89UzS/SLkfYPnx0Wf23IQQ==
 
+vicons@^0.0.1:
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/vicons/-/vicons-0.0.1.tgz#c496818e79943a8fd94b42955cbf619ace2b314f"
+  integrity sha512-suYeiVqw/q+ijWBlsGP5vhTUphRqLzCLZKqBHK4iuzlOmP1omKWDWQd+da7rDZU7dyPD5TTV9MXTLCxQt3d7zQ==
+  dependencies:
+    vue "^3.0.2"
+
 vite@^4.4.5:
   version "4.4.9"
   resolved "https://registry.yarnpkg.com/vite/-/vite-4.4.9.tgz#1402423f1a2f8d66fd8d15e351127c7236d29d3d"
@@ -486,7 +498,7 @@ vue-router@4:
   dependencies:
     "@vue/devtools-api" "^6.5.0"
 
-vue@^3.3.4:
+vue@^3.0.2, vue@^3.3.4:
   version "3.3.4"
   resolved "https://registry.yarnpkg.com/vue/-/vue-3.3.4.tgz#8ed945d3873667df1d0fcf3b2463ada028f88bd6"
   integrity sha512-VTyEYn3yvIeY1Py0WaYGZsXnz3y5UnGi62GjVEqvEGPl6nxbOrCXbVOTQWBEJUqAyTUk2uJ5JLVnYJ6ZzGbrSw==
