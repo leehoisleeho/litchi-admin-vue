@@ -1,61 +1,44 @@
 <script setup>
 import {NMenu} from 'naive-ui'
 import Header from "./header.vue";
-import {onUnmounted} from 'vue'
-import {useRouter} from 'vue-router';
+import {onMounted} from 'vue'
+import {useRouter,useRoute} from 'vue-router';
 import {useNavigationStore} from '../../store/index.js'
 import config from "../config.js";
 const router = useRouter();
 const store = useNavigationStore()
-/**
- * 侧边栏导航
- */
-// 清除会话的函数
-function clearLocal() {
-  localStorage.clear(); // 清除 Session Storage 中的数据
-}
-// 在组件卸载时移除事件监听
-onUnmounted(() => {
-  clearLocal()
-});
-const navInfo = JSON.parse(localStorage.getItem('navInfo'))
-if (navInfo) {
-  store.setNav(navInfo.value, navInfo.path)
-  router.push(navInfo.path)
-}else {
-  router.push(store.link)
-}
+
 // 切换导航
 const handleUpdateValue = (e) => {
   const path = menuOptions[e].link
   router.push(path)
-  // 将导航状态保存到本地存储
-  localStorage.setItem('navInfo', JSON.stringify({
-    value: String(e),
-    path: path,
-  }))
 }
 // 定义侧边导航栏
 const menuOptions = [
   {
     label: '首页',
-    key: '0',
+    key: 0,
     link: '/dashboard'
   },
   {
     label: '基础页面-1',
-    key: '1',
+    key: 1,
     link: '/table_template'
   },
 ]
-
+const route = useRoute()
+let info = menuOptions.filter(item=>{
+  return item.link === route.path
+})
+console.log(info)
+store.setNav(info[0].key,info[0].link)
 </script>
 
 <template>
   <Header/>
   <div class="container">
     <div class="side">
-      <n-menu :options="menuOptions" @update:value="handleUpdateValue" :default-value="String(store.value)"/>
+      <n-menu :options="menuOptions" @update:value="handleUpdateValue" :default-value="store.value"/>
       <div class="foot">{{config.footer}}</div>
     </div>
     <div class="main">
