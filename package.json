@@ -10,11 +10,14 @@
   },
   "dependencies": {
     "@vicons/ionicons5": "^0.12.0",
+    "@wangeditor/editor": "^5.1.23",
+    "@wangeditor/editor-for-vue": "^5.1.12",
+    "axios": "^1.5.0",
     "naive-ui": "^2.34.4",
     "pinia": "^2.1.6",
-    "vicons": "^0.0.1",
     "vue": "^3.3.4",
-    "vue-router": "4"
+    "vue-router": "4",
+    "vue3-video-play": "^1.3.1-beta.6"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.2.3",

@@ -1,7 +1,6 @@
 <script setup>
 import {NMenu} from 'naive-ui'
 import Header from "./header.vue";
-import {onMounted} from 'vue'
 import {useRouter,useRoute} from 'vue-router';
 import {useNavigationStore} from '../../store/index.js'
 import config from "../config.js";
@@ -21,8 +20,28 @@ const menuOptions = [
     link: '/dashboard'
   },
   {
-    label: '基础页面-1',
+    label: '新闻',
     key: 1,
+    link: '/news'
+  },
+  {
+    label: '公司资质',
+    key: 2,
+    link: '/qualification'
+  },
+  {
+    label: '公司视频',
+    key: 3,
+    link: '/video'
+  },
+  {
+    label: '关于我们',
+    key: 4,
+    link: '/about'
+  },
+  {
+    label: '基础页面-1',
+    key: 5,
     link: '/table_template'
   },
 ]
@@ -30,7 +49,6 @@ const route = useRoute()
 let info = menuOptions.filter(item=>{
   return item.link === route.path
 })
-console.log(info)
 store.setNav(info[0].key,info[0].link)
 </script>
 

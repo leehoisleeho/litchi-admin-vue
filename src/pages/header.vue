@@ -5,6 +5,7 @@ import {useRouter} from "vue-router";
 const router = useRouter();
 const handleSelect = (e)=>{
   if (e===3){
+    sessionStorage.clear()
     router.push("/")
   }
 }

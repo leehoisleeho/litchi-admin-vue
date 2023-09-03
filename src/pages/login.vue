@@ -1,14 +1,37 @@
 <script setup>
-import {ref} from "vue";
+import {ref, onBeforeUnmount} from "vue";
 import config from "../config.js";
-import {NInput,NButton,NIcon,useMessage} from 'naive-ui'
-import { PersonSharp,LockClosed } from '@vicons/ionicons5'
+import {NInput, NButton, NIcon, useMessage} from 'naive-ui'
+import {PersonSharp, LockClosed} from '@vicons/ionicons5'
+import {useLoadingStore} from '/store/index.js'
+
+const store = useLoadingStore()
+import api from '/API/api.js'
 import {useRouter} from 'vue-router';
+
 const router = useRouter();
+const username = ref('')
+const password = ref('')
+
 const message = useMessage()
-const toIndex = ()=>{
-  router.push('/index')
-  message.success('登录成功')
+
+
+const toIndex = () => {
+  store.set(true)
+  api.login({
+    username: username.value,
+    password: password.value
+  }).then(res => {
+    if (res.code === 0) {
+      sessionStorage.setItem('token',res.token)
+      router.push('/index')
+      message.success(res.msg)
+      store.set(false)
+    } else if (res.code === 1) {
+      message.error(res.msg)
+      store.set(false)
+    }
+  })
 }
 </script>
 
@@ -30,17 +53,18 @@ const toIndex = ()=>{
       </div>
       <div class="loginBox_2">
         <h2>登录 Login</h2>
-        <n-input placeholder="账号" style="margin-top: 40px">
-        <template #prefix>
-          <n-icon :component="PersonSharp" />
-        </template>
-        </n-input >
-        <n-input placeholder="密码" type="password"  show-password-on="mousedown" style="margin-top: 20px">
+        <n-input placeholder="账号" style="margin-top: 40px" v-model:value="username" @keydown.enter="toIndex">
+          <template #prefix>
+            <n-icon :component="PersonSharp"/>
+          </template>
+        </n-input>
+        <n-input placeholder="密码" type="password" show-password-on="mousedown" style="margin-top: 20px"
+                 v-model:value="password" @keydown.enter="toIndex">
           <template #prefix>
             <n-icon :component="LockClosed" />
           </template>
         </n-input>
-        <n-button type="primary" block style="margin-top: 20px" @click="toIndex">
+        <n-button type="primary" block style="margin-top: 20px" @click="toIndex" @keydown.enter="toIndex">
           登录
         </n-button>
       </div>
@@ -49,12 +73,14 @@ const toIndex = ()=>{
 </template>
 
 <style scoped>
-.loginBox{
+.loginBox {
   margin-top: 25vh;
 }
-.loginBox_2>h2{
+
+.loginBox_2 > h2 {
   color: #333333;
 }
+
 .imgBox {
   width: 130px;
   height: 130px;
@@ -100,6 +126,7 @@ const toIndex = ()=>{
   font-size: 12px;
   color: #999999;
 }
+
 .loginBox_2 {
   width: 450px;
   display: flex;
@@ -108,6 +135,7 @@ const toIndex = ()=>{
   align-items: center;
   justify-content: center;
 }
+
 .loginBox_1 {
   width: 350px;
   border-right: 1px solid #efefef;

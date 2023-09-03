@@ -12,3 +12,13 @@ export const useNavigationStore = defineStore('navigation', {
         },
     },
 });
+export const useLoadingStore = defineStore('loading', {
+    state: () => ({
+        show:false
+    }),
+    actions: {
+        set(val){
+            this.show = val
+        }
+    },
+});
