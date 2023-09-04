@@ -1,6 +1,16 @@
 <script setup>
 import {onMounted, ref} from 'vue'
-import {NButton, NDivider, NPagination, NPopconfirm, NDrawer, NDrawerContent, NInput, useMessage} from 'naive-ui'
+import {
+  NButton,
+  NDivider,
+  NPagination,
+  NPopconfirm,
+  NDrawer,
+  NDrawerContent,
+  NInput,
+  useMessage,
+  NSwitch
+} from 'naive-ui'
 import ImgOne from "../components/ImgOne.vue";
 import Editor from "../components/Editor.vue"
 import api from '/API/api.js'
@@ -59,7 +69,16 @@ const addNews = () => {
 // 获取新闻
 const getNews = () => {
   api.getNews().then(res => {
-    list.value = res.data
+    let arr = res.data
+    arr.forEach(item => {
+      if (item.isbanner === 1) {
+        item.disabled = true
+        return
+      }
+      item.disabled = false
+    })
+    list.value = arr
+    console.log(list.value)
   })
 }
 const add = () => {
@@ -120,6 +139,7 @@ const editNews = () => {
     getNews()
   })
 }
+
 </script>
 
 <template>
@@ -136,7 +156,7 @@ const editNews = () => {
           <div class="title">
             上传新闻封面
           </div>
-          <ImgOne @success="onSuccess" :img="img"></ImgOne>
+          <ImgOne v-model:src="img"></ImgOne>
         </div>
         <div class="formBox">
           <div class="title">
@@ -172,7 +192,7 @@ const editNews = () => {
           <li>{{ item.createtime }}</li>
           <li>{{ item.views }}</li>
           <li>
-            <span v-if="item.isbanner===1" style="color: red">是</span>
+            <span style="color: red" v-if="item.isbanner===1">是</span>
             <span v-if="item.isbanner===0">否</span>
           </li>
           <li>
@@ -183,7 +203,7 @@ const editNews = () => {
                 negative-text="取消"
             >
               <template #trigger>
-                <n-button type="error" size="small">删除</n-button>
+                <n-button type="error" size="small" :disabled="item.disabled">删除</n-button>
               </template>
               确认删除吗？
             </n-popconfirm>

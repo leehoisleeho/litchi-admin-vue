@@ -128,4 +128,66 @@ export default {
             data
         });
     },
+    // 新增banner
+    addBanner: (data) => {
+        return http({
+            url: "/api/addBanner",
+            method: "post",
+            data,
+        });
+    },
+    // 获取banner
+    getBanner: (id = '') => {
+        return http({
+            url: "/api/getBanner?id=" + id,
+            method: "get",
+        });
+    },
+    // 删除banner
+    delBanner: (data) => {
+        return http({
+            url: "/api/delBanner",
+            method: "delete",
+            data
+        });
+    },
+    // 编辑banner
+    editBanner: (data) => {
+        return http({
+            url: "/api/editBanner",
+            method: "post",
+            data
+        });
+    },
+    // 新增视频
+    addProduct: (data) => {
+        return http({
+            url: "/api/addProduct",
+            method: "post",
+            data,
+        });
+    },
+    // 获取视频
+    getProduct: (id = '') => {
+        return http({
+            url: "/api/getProduct?id=" + id,
+            method: "get",
+        });
+    },
+    // 删除资质
+    delProduct: (data) => {
+        return http({
+            url: "/api/delProduct",
+            method: "delete",
+            data
+        });
+    },
+    // 编辑资质
+    editProduct: (data) => {
+        return http({
+            url: "/api/editProduct",
+            method: "post",
+            data
+        });
+    },
 }

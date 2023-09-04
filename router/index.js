@@ -7,6 +7,8 @@ import news from '/src/pages/news.vue'
 import qualification from '/src/pages/qualification.vue'
 import video from '/src/pages/video.vue'
 import about from '/src/pages/about.vue'
+import product from '/src/pages/product.vue'
+import banner from '/src/pages/banner.vue'
 
 const routes = [
     {
@@ -22,7 +24,10 @@ const routes = [
             {path: '/qualification', component: qualification},
             {path: '/video', component: video},
             {path: '/about', component: about},
+            {path: '/product', component: product},
+            {path: '/banner', component: banner},
             {path: '/table_template', component: table_template},
+
         ]
     },
 ];

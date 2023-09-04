@@ -1,20 +1,35 @@
 <script setup>
 import {onMounted, ref} from 'vue'
-import {NButton, NDivider, NPagination, NPopconfirm, NDrawer, NDrawerContent, NInput, useMessage} from 'naive-ui'
-import ImgOne from "../components/ImgOne.vue";
-import Editor from "../components/Editor.vue"
+import {
+  NButton,
+  NDivider,
+  NPagination,
+  NPopconfirm,
+  NDrawer,
+  NDrawerContent,
+  NSelect,
+  NInput,
+  useMessage,
+  NSwitch
+} from 'naive-ui'
 import api from '/API/api.js'
 import verifyData from '/src/util/verifyData.js'
 import timestamp from '/src/util/date.js'
+import ImgOne from "../components/ImgOne.vue";
 
 const message = useMessage()
-const title = ref('')
-const img = ref('')
+// 封面的img
+const src = ref('')
 const list = ref([])
+const newsList = ref([])
 const page = ref(1)
+//选择器val
+const value = ref()
+//选择器options
+const options = ref([])
 // 页面加载时
 onMounted(() => {
-  getQualification()
+  getBanner()
 })
 /**
  * 抽屉
@@ -26,28 +41,28 @@ const activate = (place) => {
   active.value = true;
   //重置
   isEdit.value = false
-  img.value = ''
+  src.value = ''
   title.value = ''
   placement.value = place;
 };
 // 确认抽屉
 const add = () => {
   if (isEdit.value) {
-    editQualification()
+    editVideo()
     return
   }
   let msg = verifyData([
     {
       data: title.value,
-      msg: '资质名称不能为空',
+      msg: '请选择新闻',
     },
     {
-      data: img.value,
-      msg: '资质图片不能为空',
+      data: src.value,
+      msg: '还没有上传封面',
     },
   ])
   if (msg === 0) {
-    addQualification()
+    addBanner()
   } else {
     message.error(msg)
   }
@@ -56,74 +71,114 @@ const add = () => {
 const Oncancel = () => {
   active.value = false;
 }
-// 图片上传成功的自定义事件
-const onSuccess = (val) => {
-  img.value = val
-}
 // 新增
-const addQualification = ()=>{
-  api.addQualification({
-    title:title.value,
-    img:img.value,
+const addBanner = () => {
+  api.addBanner({
+    newsid: newsid.value,
+    title: title.value,
+    img: src.value,
     createtime: timestamp()
-  }).then(res=>{
-    console.log(123)
-    message.success('上传成功')
-    getQualification()
-    active.value = false
+  }).then(res => {
+    api.editNews({
+      id: newsid.value,
+      isbanner: 1
+    }).then(res => {
+      message.success('上传成功')
+      getBanner()
+      active.value = false
+    })
   })
 }
 // 删除
-const confirmDelete = (id) => {
-  api.delQualification({id}).then(res=>{
-    getQualification()
+const confirmDelete = (item) => {
+  api.delBanner({id: item.id}).then(res => {
+    api.editNews({
+      id: item.newsid,
+      isbanner: 0
+    }).then(res => {
+      getBanner()
+    })
   })
 }
 // 查看
-const getQualification = ()=>{
-  api.getQualification().then(res=>{
-    list.value = res.data
+const getBanner = () => {
+  api.getBanner().then(res => {
+    let arr = res.data
+    list.value = arr
   })
 }
 // 编辑
 const isEdit = ref(false)
 const id = ref("")
-const editBut = (item)=>{
+const editBut = (item) => {
   isEdit.value = true
   id.value = item.id
   title.value = item.title
-  img.value = item.img
+  src.value = item.src
   active.value = true
 }
-const editQualification = ()=>{
-  api.editQualification({
+const editVideo = () => {
+  api.editVideo({
     id: id.value,
     title: title.value,
-    img: img.value,
+    src: src.value,
   }).then(res => {
     isEdit.value = false
     active.value = false
-    getQualification()
+    getBanner()
   })
 }
-
+// 选择器
+const newsid = ref('')
+const title = ref('')
+// 选择新闻
+const onChange = (e) => {
+  newsid.value = e
+  newsList.value.forEach(item => {
+    if (item.id === e) {
+      title.value = item.title
+    }
+  })
+}
+// 打开选择器
+const onShow = () => {
+// 获取新闻列表 赋值给选择器的options
+  api.getNews().then(res => {
+    newsList.value = res.data
+    res.data.forEach(item => {
+      if (item.isbanner === 1) {
+        options.value.push({
+          label: item.title,
+          value: item.id,
+          disabled: true
+        })
+        return
+      }
+      options.value.push({
+        label: item.title,
+        value: item.id,
+        disabled: false
+      })
+    })
+  })
+}
 </script>
 
 <template>
   <div class="container">
     <n-drawer v-model:show="active" :width="800" :placement="placement">
-      <n-drawer-content title="添加资质">
+      <n-drawer-content title="添加轮播图">
         <div class="formBox">
           <div class="title">
-            资质名称
+            选择新闻
           </div>
-          <n-input v-model:value="title" type="text" placeholder="请输入资质名称"/>
+          <n-select v-model:value="value" :options="options" @update:value="onChange" @update:show="onShow"/>
         </div>
         <div class="formBox">
           <div class="title">
-            上传资质图片
+            上传轮播图封面
           </div>
-          <ImgOne v-model:src="img" :imgSize="[100,140]"></ImgOne>
+          <ImgOne v-model:src="src" :imgSize="[400,224]"></ImgOne>
         </div>
         <template #footer>
           <n-button @click="add" type="primary">确认</n-button>
@@ -137,9 +192,9 @@ const editQualification = ()=>{
       </div>
       <ul class="tableTitle">
         <li>序号</li>
-        <li>资质名称</li>
-        <li>资质图片</li>
-        <li>查看量</li>
+        <li>新闻ID</li>
+        <li>新闻标题</li>
+        <li>封面</li>
         <li>创建时间</li>
         <li>操作</li>
       </ul>
@@ -149,21 +204,22 @@ const editQualification = ()=>{
       <TransitionGroup name="list" tag="div">
         <ul class="tableInfo" v-for="item in list" :key="item.id">
           <li>{{ item.id }}</li>
+          <li>{{ item.newsid }}</li>
           <li>{{ item.title }}</li>
           <li>
             <img :src="item.img" alt="">
           </li>
-          <li>{{ item.createtime }}</li>
-          <li>{{ item.views }}</li>
           <li>
-            <n-button type="info" size="small" @click="editBut(item)">查看</n-button>
+            {{ item.createtime }}
+          </li>
+          <li>
             <n-popconfirm
-                @positive-click="confirmDelete(item.id)"
+                @positive-click="confirmDelete(item)"
                 positive-text="确认"
                 negative-text="取消"
             >
               <template #trigger>
-                <n-button type="error" size="small">删除</n-button>
+                <n-button type="error" size="small" :disabled="item.btndisabled">删除</n-button>
               </template>
               确认删除吗？
             </n-popconfirm>
@@ -181,12 +237,13 @@ const editQualification = ()=>{
 </template>
 
 <style scoped>
-.tableInfo>li>img{
+.tableInfo > li > img {
   width: 100px;
-  height: 140px;
+  height: 56px;
   border-radius: 5px;
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 }
+
 .formBox {
   margin-bottom: 20px;
 }

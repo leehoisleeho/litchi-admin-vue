@@ -1,9 +1,10 @@
 <script setup>
 import {NMenu} from 'naive-ui'
 import Header from "./header.vue";
-import {useRouter,useRoute} from 'vue-router';
+import {useRouter, useRoute} from 'vue-router';
 import {useNavigationStore} from '../../store/index.js'
 import config from "../config.js";
+
 const router = useRouter();
 const store = useNavigationStore()
 
@@ -35,21 +36,26 @@ const menuOptions = [
     link: '/video'
   },
   {
-    label: '关于我们',
+    label: '产品列表',
     key: 4,
+    link: '/product'
+  },
+  {
+    label: '关于我们',
+    key: 5,
     link: '/about'
   },
   {
-    label: '基础页面-1',
-    key: 5,
-    link: '/table_template'
+    label: '轮播图',
+    key: 6,
+    link: '/banner'
   },
 ]
 const route = useRoute()
-let info = menuOptions.filter(item=>{
+let info = menuOptions.filter(item => {
   return item.link === route.path
 })
-store.setNav(info[0].key,info[0].link)
+store.setNav(info[0].key, info[0].link)
 </script>
 
 <template>
@@ -57,7 +63,7 @@ store.setNav(info[0].key,info[0].link)
   <div class="container">
     <div class="side">
       <n-menu :options="menuOptions" @update:value="handleUpdateValue" :default-value="store.value"/>
-      <div class="foot">{{config.footer}}</div>
+      <div class="foot">{{ config.footer }}</div>
     </div>
     <div class="main">
       <router-view></router-view>
@@ -82,7 +88,8 @@ store.setNav(info[0].key,info[0].link)
   padding: 10px 0;
   position: relative;
 }
-.side > .foot{
+
+.side > .foot {
   position: absolute;
   bottom: 10px;
   width: 100%;
