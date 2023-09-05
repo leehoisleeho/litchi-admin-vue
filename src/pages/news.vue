@@ -78,7 +78,6 @@ const getNews = () => {
       item.disabled = false
     })
     list.value = arr
-    console.log(list.value)
   })
 }
 const add = () => {

@@ -53,7 +53,7 @@ const toIndex = () => {
       </div>
       <div class="loginBox_2">
         <h2>登录 Login</h2>
-        <n-input placeholder="账号" style="margin-top: 40px" v-model:value="username" @keydown.enter="toIndex">
+        <n-input placeholder="账号" style="margin-top: 40px" v-model:value="username">
           <template #prefix>
             <n-icon :component="PersonSharp"/>
           </template>
@@ -150,6 +150,7 @@ const toIndex = () => {
   min-width: 1200px;
   display: flex;
   justify-content: center;
+  background: url("../assets/img/bg.png");
 }
 
 .loginBox {
@@ -158,5 +159,6 @@ const toIndex = () => {
   height: 430px;
   border-radius: 10px;
   display: flex;
+  background: white;
 }
 </style>

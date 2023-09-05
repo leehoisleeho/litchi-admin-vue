@@ -145,21 +145,23 @@ const onShow = () => {
 // 获取新闻列表 赋值给选择器的options
   api.getNews().then(res => {
     newsList.value = res.data
+    let arr = []
     res.data.forEach(item => {
       if (item.isbanner === 1) {
-        options.value.push({
+        arr.push({
           label: item.title,
           value: item.id,
           disabled: true
         })
         return
       }
-      options.value.push({
+      arr.push({
         label: item.title,
         value: item.id,
         disabled: false
       })
     })
+    options.value = arr
   })
 }
 </script>

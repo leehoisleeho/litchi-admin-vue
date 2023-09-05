@@ -9,6 +9,14 @@ export default {
             data,
         });
     },
+    // 验证token
+    tokenCheck: (token) => {
+        return http({
+            url: '/api/checkToken',
+            method: 'post',
+            data: {token}
+        })
+    },
     // 上传数据
     update: (data) => {
         return http({
