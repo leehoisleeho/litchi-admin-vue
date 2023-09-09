@@ -9,17 +9,11 @@ onMounted(() => {
 </script>
 
 <template>
-
   <n-message-provider>
     <div class="container">
-      <div class="loading" v-show="store.show">
-        <n-spin size="medium"/>
-<!--        <p>加载中</p>-->
-      </div>
       <router-view></router-view>
     </div>
   </n-message-provider>
-
 </template>
 
 <style scoped>
@@ -28,17 +22,8 @@ onMounted(() => {
   font-size: 16px;
   margin-top: 15px;
 }
-.loading{
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  align-items: center;
-  width: 100vw;
-  position: absolute;
-  padding: 20px 0;
-}
 .container {
-  min-width: 1200px;
+  min-width: 1440px;
   height: 100vh;
 }
 </style>

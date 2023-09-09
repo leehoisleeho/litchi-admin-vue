@@ -98,12 +98,11 @@ const options = [
 }
 
 .container {
-  min-width: 1200px;
+  min-width: 1440px;
   height: 80px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  //box-shadow: rgba(149, 157, 165, 0.1) 0px 8px 24px;
-  border: 1px solid #f3f3f3;
+  box-shadow: rgba(149, 157, 165, 0.1) 0px 8px 24px;
 }
 </style>

@@ -4,10 +4,8 @@ import Header from "./header.vue";
 import {useRouter, useRoute} from 'vue-router';
 import {useNavigationStore} from '../../store/index.js'
 import config from "../config.js";
-
 const router = useRouter();
 const store = useNavigationStore()
-
 // 切换导航
 const handleUpdateValue = (e) => {
   const path = menuOptions[e].link
@@ -21,34 +19,14 @@ const menuOptions = [
     link: '/dashboard'
   },
   {
-    label: '新闻',
+    label: '基础页面',
     key: 1,
-    link: '/news'
+    link: '/table'
   },
   {
-    label: '公司资质',
+    label: '基础页面 Plus',
     key: 2,
-    link: '/qualification'
-  },
-  {
-    label: '公司视频',
-    key: 3,
-    link: '/video'
-  },
-  {
-    label: '产品列表',
-    key: 4,
-    link: '/product'
-  },
-  {
-    label: '关于我们',
-    key: 5,
-    link: '/about'
-  },
-  {
-    label: '轮播图',
-    key: 6,
-    link: '/banner'
+    link: '/tablePlus'
   },
 ]
 const route = useRoute()
@@ -59,26 +37,32 @@ store.setNav(info[0].key, info[0].link)
 </script>
 
 <template>
-  <Header/>
-  <div class="container">
-    <div class="side">
-      <n-menu :options="menuOptions" @update:value="handleUpdateValue" :default-value="store.value"/>
-      <div class="foot">{{ config.footer }}</div>
-    </div>
-    <div class="main">
-      <router-view></router-view>
+  <div class="BOX">
+    <Header/>
+    <div class="container">
+      <div class="side">
+        <n-menu :options="menuOptions" @update:value="handleUpdateValue" :default-value="store.value"/>
+        <div class="foot">{{ config.footer }}</div>
+      </div>
+      <div class="main">
+        <router-view></router-view>
+      </div>
     </div>
   </div>
 </template>
 
 <style scoped>
+.BOX{
+  min-width: 1440px;
+}
 .container {
   position: relative;
   display: flex;
+  width: 100%;
 }
 
 .main {
-  width: calc(100vw - 234px);
+  width: 100%;
 }
 
 .side {

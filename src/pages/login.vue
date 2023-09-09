@@ -3,33 +3,25 @@ import {ref, onBeforeUnmount} from "vue";
 import config from "../config.js";
 import {NInput, NButton, NIcon, useMessage} from 'naive-ui'
 import {PersonSharp, LockClosed} from '@vicons/ionicons5'
-import {useLoadingStore} from '/store/index.js'
-
-const store = useLoadingStore()
 import api from '/API/api.js'
 import {useRouter} from 'vue-router';
-
 const router = useRouter();
 const username = ref('')
 const password = ref('')
-
 const message = useMessage()
 
-
 const toIndex = () => {
-  store.set(true)
   api.login({
     username: username.value,
     password: password.value
   }).then(res => {
-    if (res.code === 0) {
-      sessionStorage.setItem('token',res.token)
+    console.log(res)
+    if (res.error === 0) {
+      sessionStorage.setItem('token', res.token)
       router.push('/index')
-      message.success(res.msg)
-      store.set(false)
-    } else if (res.code === 1) {
-      message.error(res.msg)
-      store.set(false)
+      message.success('登录成功')
+    } else if (res.error === 1) {
+      message.error('账号密码错误')
     }
   })
 }
@@ -45,10 +37,10 @@ const toIndex = () => {
         <h1>{{ config.system_name }}</h1>
         <div class="version">
           <img src="../assets/img/versionIcon.png">
-          <p>版本号 v 0.0.2</p>
+          <p>版本号 v {{config.version}}</p>
         </div>
         <div class="foot">
-          {{ config.footer }}
+          <p>{{ config.footer }}</p>
         </div>
       </div>
       <div class="loginBox_2">
@@ -61,7 +53,7 @@ const toIndex = () => {
         <n-input placeholder="密码" type="password" show-password-on="mousedown" style="margin-top: 20px"
                  v-model:value="password" @keydown.enter="toIndex">
           <template #prefix>
-            <n-icon :component="LockClosed" />
+            <n-icon :component="LockClosed"/>
           </template>
         </n-input>
         <n-button type="primary" block style="margin-top: 20px" @click="toIndex" @keydown.enter="toIndex">
@@ -119,12 +111,15 @@ const toIndex = () => {
   width: 100%;
   text-align: center;
 }
-
-.loginBox_1 > .foot {
+.foot{
+  padding: 0 50px;
   position: absolute;
   bottom: 10px;
-  font-size: 12px;
+}
+.foot > p {
+  text-align: center;
   color: #999999;
+  font-size: 13px;
 }
 
 .loginBox_2 {

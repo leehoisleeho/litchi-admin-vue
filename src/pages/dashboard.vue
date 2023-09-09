@@ -1,23 +1,28 @@
-<script setup></script>
+<script setup>
+import UpLoad from "../components/UpLoad.vue";
+</script>
 
 <template>
   <div class="container">
     <div class="info">
       <p>暂无内容</p>
+      <UpLoad :imgSize=[100,100]></UpLoad>
     </div>
   </div>
 </template>
 
 <style scoped>
-.info >p{
+.info > p {
   color: #999999;
   padding: 20px;
 }
+
 .info {
   width: 100%;
   border-radius: 10px;
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
   overflow-y: auto;
+  padding: 0 20px;
 }
 
 .container {
