@@ -20,12 +20,12 @@ watch(file, (newValue, oldValue) => {
 const update = () => {
   const inputImg = document.getElementById('inputImg')
   inputImg.click()
-  inputImg.addEventListener('change', xxx)
+  inputImg.addEventListener('change', onchange)
 }
 
-const xxx = () => {
+const onchange = () => {
   const inputImg = document.getElementById('inputImg')
-  inputImg.removeEventListener('change', xxx);
+  inputImg.removeEventListener('change', onchange);
   api.upload(inputImg.files).then(res => {
     file.value = res.src
     emit('update:src', file.value)

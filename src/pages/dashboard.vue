@@ -6,7 +6,6 @@ import UpLoad from "../components/UpLoad.vue";
   <div class="container">
     <div class="info">
       <p>暂无内容</p>
-      <UpLoad :imgSize=[100,100]></UpLoad>
     </div>
   </div>
 </template>
